@@ -10,18 +10,22 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.Base64;
 import java.util.List;
 import java.util.Objects;
 
 public class DhmzService {
 
-    public QueryResult fetchNewestDataFotCity(String city) {
+    public String fetchNewestDataFotCity(String city) {
 
         try {
             CountryCroatiaDto data = doRequest();
-            return getCityFromData(data, city);
+            QueryResult cityFromData = getCityFromData(data, city);
+
+            return Base64.getEncoder().encodeToString(cityFromData.toJson().getBytes());
+
         } catch (Exception exception) {
-            return new QueryResult();
+            return "";
         }
     }
 

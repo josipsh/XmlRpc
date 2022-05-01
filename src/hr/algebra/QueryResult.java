@@ -1,9 +1,12 @@
 package hr.algebra;
 
+import com.sun.org.apache.bcel.internal.classfile.ConstantString;
+
 import java.io.Externalizable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+import java.sql.ResultSet;
 
 public class QueryResult implements Externalizable {
     public static final long serialVersionUID = 1L;
@@ -129,5 +132,38 @@ public class QueryResult implements Externalizable {
         windSpeed = in.readDouble();
         weather = in.readUTF();
         errorMessage = in.readUTF();
+    }
+
+    @Override
+    public String toString() {
+        return "QueryResult{" +
+                "date='" + date + '\'' +
+                ", temp=" + temp +
+                ", humidity=" + humidity +
+                ", pressure=" + pressure +
+                ", windSpeed=" + windSpeed +
+                ", weather='" + weather + '\'' +
+                ", cityName='" + cityName + '\'' +
+                ", countryName='" + countryName + '\'' +
+                ", errorMessage='" + errorMessage + '\'' +
+                '}';
+    }
+
+    public String toJson() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("{");
+        sb.append("\"temp\": \""+ temp + "\",");
+        sb.append("\"humidity\": \""+ humidity + "\",");
+        sb.append("\"windSpeed\": \""+ windSpeed + "\",");
+        sb.append("\"pressure\": \""+ pressure + "\",");
+        sb.append("\"weather\": \""+ weather + "\",");
+        sb.append("\"date\": \""+ date + "\",");
+        sb.append("\"cityName\": \""+ cityName + "\",");
+        sb.append("\"countryName\": \""+ countryName + "\",");
+        sb.append("\"errorMessage\": \""+ errorMessage+"\"");
+        sb.append("}");
+
+        return sb.toString();
     }
 }
